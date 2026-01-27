@@ -17,8 +17,6 @@
 
 body {
     background-color: var(--bg-color);
-    /* Gradiente sutil hacia arriba como pediste */
-    background: linear-gradient(to top, #f4f0fa, var(--bg-color)); 
     font-family: var(--font-main);
     color: var(--text-grey);
     height: 100vh;
@@ -173,20 +171,23 @@ body {
 
 /* --- SIDEBAR IZQUIERDA --- */
 .sidebar-left {
-    width: 320px; /* Ancho suficiente para que se vea como en tu captura */
+    width: 280px; /* Tamaño más profesional y menos invasivo */
     padding: 20px;
     display: flex;
     flex-direction: column;
+    /* Añadimos la línea separadora que faltaba */
+    border-right: 2px solid var(--separator); 
+    background-color: var(--bg-color); /* Aseguramos consistencia */
 }
 
 /* EL CONTENEDOR REDONDEADO */
 .preferences-container {
-    background-color: #EBFAFF; /* Color base del panel */
-    border-radius: 20px; /* Muy redondeado como pediste */
-    border: 1px solid #C7D7DF; /* Contorno externo sutil */
+    background-color: #EBFAFF;
+    border-radius: 20px;
+    border: 1px solid #C7D7DF;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Para que las líneas no se salgan de las esquinas */
+    overflow: hidden;
 }
 
 /* HEADER DEL PANEL */
