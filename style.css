@@ -170,3 +170,77 @@ body {
     box-shadow: inset 0 0 0 2px #5574B5,
                 inset 0 2px 5px rgba(255, 255, 255, 0.5);
 }
+
+/* --- SIDEBAR IZQUIERDA --- */
+.sidebar-left {
+    width: 320px; /* Ancho suficiente para que se vea como en tu captura */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* EL CONTENEDOR REDONDEADO */
+.preferences-container {
+    background-color: #EBFAFF; /* Color base del panel */
+    border-radius: 20px; /* Muy redondeado como pediste */
+    border: 1px solid #C7D7DF; /* Contorno externo sutil */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Para que las líneas no se salgan de las esquinas */
+}
+
+/* HEADER DEL PANEL */
+.pref-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid #9AD3E6; /* Línea separadora superior */
+}
+
+.pref-header h2 {
+    font-size: 18px;
+    color: #6c8aa7; /* Texto que definimos */
+    font-family: var(--font-main);
+}
+
+.pref-header i {
+    color: #90b5eb; /* Color de iconos */
+    font-size: 16px;
+}
+
+/* CONTENIDO Y LÍNEAS SEPARADORAS */
+.pref-item {
+    height: 100px; /* Espacio placeholder */
+    border-bottom: 1.5px solid #9AD3E6; /* Líneas de separación horizontales */
+}
+
+/* Quitar la línea al último item para que no choque con el footer */
+.pref-item:last-child {
+    border-bottom: none;
+}
+
+/* FOOTER "MOSTRAR MÁS" */
+.pref-footer {
+    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.3); /* Un toque de brillo extra */
+}
+
+.pref-footer a {
+    color: #90b5eb; /* El color de los iconos */
+    text-decoration: none;
+    font-family: var(--font-main);
+    font-size: 16px;
+    transition: color 0.2s;
+}
+
+.pref-footer a:hover {
+    color: var(--text-accent);
+}
+
+/* AJUSTE PARA EL RESPONSIVE */
+@media (max-width: 1000px) {
+    .sidebar-left {
+        display: none; /* Se oculta en pantallas pequeñas para priorizar el feed */
+    }
+}
