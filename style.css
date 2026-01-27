@@ -133,8 +133,9 @@ body {
     border: 2px solid #006A05;
     
     /* CAPA 2: Color Base y Luz Glass (Gradiente vertical) */
-    /* De Luz (#A3E15C) arriba a Base (#53B427) abajo */
-    background: linear-gradient(to bottom, #A3E15C 0%, #53B427 100%);
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#a3e15c+0,53b427+50,3da321+51,53b427+100 */
+    background: linear-gradient(to bottom,  #a3e15c 0%,#53b427 50%,#3da321 51%,#53b427 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
     
     /* CAPA 3: Contorno Interior (#168617) usando sombra interna (Inset) */
     /* También añadimos un pequeño brillo blanco arriba para más efecto glass */
@@ -161,7 +162,9 @@ body {
     border: 2px solid #374D86;
     
     /* CAPA 2: Gradiente de Luz (#ADDFF4) a Base (#7FACD6) */
-    background: linear-gradient(to bottom, #ADDFF4 0%, #7FACD6 100%);
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#addff4+0,7facd6+50,739ccc+51,587ec4+100;Button-Blue */
+    background: linear-gradient(to bottom,  #addff4 0%,#7facd6 50%,#739ccc 51%,#587ec4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
     
     /* CAPA 3: Contorno Interior (#5574B5) */
     box-shadow: inset 0 0 0 2px #5574B5,
