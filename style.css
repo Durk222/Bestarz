@@ -35,10 +35,10 @@ body {
 /* ZONA DEL CONTENIDO (Izquierda - Ocupa el resto del espacio) */
 .main-feed {
     flex-grow: 1;
-    /* Esto es temporal para que veas que existe el espacio */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; /* Esto es lo nuevo clave */
+    background-color: var(--bg-color);
+    position: relative; /* Para asegurar el z-index si hace falta */
 }
 
 /* BARRA LATERAL (Derecha) */
@@ -84,4 +84,86 @@ body {
 .nav-footer {
     margin-top: auto; /* Empuja el botón al final de la barra */
     margin-bottom: 20px;
+}
+
+/* --- BARRA SUPERIOR FRUTIGER --- */
+.top-bar {
+    width: 100%;
+    height: 60px; /* Altura estándar para barras de navegación */
+    /* Gradiente esqueumorfista: Centro brillante (#B8E5F7) a base (#B1D4F0) */
+    background: radial-gradient(circle at center, #B8E5F7 0%, #B1D4F0 100%);
+    border-bottom: 2px solid #B1D4F0; /* Línea separativa */
+    display: flex;
+    justify-content: flex-end; /* Alinea botones a la derecha */
+    align-items: center;
+    padding: 0 20px; /* Espacio a los lados */
+    box-shadow: 0 2px 10px rgba(177, 212, 240, 0.3); /* Sombra suave hacia abajo */
+}
+
+.top-bar-controls {
+    display: flex;
+    gap: 10px; /* Espacio entre el botón azul y el verde */
+}
+
+/* --- ESTILO BASE DE BOTONES FRUTIGER --- */
+.btn-frutiger {
+    font-family: var(--font-main);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-frutiger:active {
+    transform: scale(0.95); /* Efecto de clic */
+}
+
+/* --- BOTÓN VERDE (¡INGRESA!) --- */
+.btn-green-login {
+    padding: 5px 20px;
+    font-size: 20px;
+    color: #FDFBFF;
+    border-radius: 8px; /* Bordes redondeados típicos */
+    
+    /* CAPA 1: Borde Exterior (#006A05) */
+    border: 2px solid #006A05;
+    
+    /* CAPA 2: Color Base y Luz Glass (Gradiente vertical) */
+    /* De Luz (#A3E15C) arriba a Base (#53B427) abajo */
+    background: linear-gradient(to bottom, #A3E15C 0%, #53B427 100%);
+    
+    /* CAPA 3: Contorno Interior (#168617) usando sombra interna (Inset) */
+    /* También añadimos un pequeño brillo blanco arriba para más efecto glass */
+    box-shadow: inset 0 0 0 2px #168617, 
+                inset 0 2px 5px rgba(255, 255, 255, 0.4); 
+    
+    /* TEXTO CON OUTLINE (#065C13) */
+    /* Usamos text-shadow para simular el trazo grueso */
+    text-shadow: 
+        -1.5px -1.5px 0 #065C13,  
+         1.5px -1.5px 0 #065C13,
+        -1.5px  1.5px 0 #065C13,
+         1.5px  1.5px 0 #065C13,
+         0px 2px 2px rgba(0,0,0,0.3); /* Sombra extra para profundidad */
+}
+
+/* --- BOTÓN AZUL CUADRADO --- */
+.btn-blue-square {
+    width: 40px;  /* Cuadrado */
+    height: 40px; /* Ajusta según la altura del verde si quieres */
+    border-radius: 8px;
+    
+    /* CAPA 1: Borde Exterior (#374D86) */
+    border: 2px solid #374D86;
+    
+    /* CAPA 2: Gradiente de Luz (#ADDFF4) a Base (#7FACD6) */
+    background: linear-gradient(to bottom, #ADDFF4 0%, #7FACD6 100%);
+    
+    /* CAPA 3: Contorno Interior (#5574B5) */
+    box-shadow: inset 0 0 0 2px #5574B5,
+                inset 0 2px 5px rgba(255, 255, 255, 0.5);
 }
