@@ -206,8 +206,8 @@ body {
 }
 
 .pref-header i {
-    color: --icon-color;
-    font-size: 14px;
+    color: var(--icon-color);
+    font-size: 16px;
 }
 
 /* CONTENIDO Y LÍNEAS SEPARADORAS */
