@@ -200,14 +200,14 @@ body {
 }
 
 .pref-header h2 {
-    font-size: 14px;
-    color: --text-grey; 
+    font-size: 16px;
+    color: #6c8aa7; 
     font-family: var(--font-main);
 }
 
 .pref-header i {
     color: --icon-color;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 /* CONTENIDO Y LÍNEAS SEPARADORAS */
