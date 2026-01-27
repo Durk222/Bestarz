@@ -200,14 +200,14 @@ body {
 }
 
 .pref-header h2 {
-    font-size: 18px;
-    color: #6c8aa7; /* Texto que definimos */
+    font-size: 14px;
+    color: --text-grey; 
     font-family: var(--font-main);
 }
 
 .pref-header i {
-    color: #90b5eb; /* Color de iconos */
-    font-size: 16px;
+    color: --icon-color;
+    font-size: 12px;
 }
 
 /* CONTENIDO Y LÍNEAS SEPARADORAS */
@@ -225,6 +225,7 @@ body {
 .pref-footer {
     padding: 15px 20px;
     background-color: rgba(255, 255, 255, 0.3); /* Un toque de brillo extra */
+    border-top: 1.5px solid #9AD3E6;
 }
 
 .pref-footer a {
