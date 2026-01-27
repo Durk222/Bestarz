@@ -1,0 +1,87 @@
+/* RESET BÁSICO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* VARIABLES DE COLOR (Tu paleta oficial) */
+:root {
+    --bg-color: #FDFBFF;
+    --text-grey: #6c8aa7;
+    --text-accent: #4b6b9e;
+    --separator: #B1D4F0;
+    --icon-color: #90B5EB;
+    --font-main: 'Righteous', cursive;
+}
+
+body {
+    background-color: var(--bg-color);
+    /* Gradiente sutil hacia arriba como pediste */
+    background: linear-gradient(to top, #f4f0fa, var(--bg-color)); 
+    font-family: var(--font-main);
+    color: var(--text-grey);
+    height: 100vh;
+    overflow: hidden; /* Evita scroll doble por ahora */
+}
+
+/* LAYOUT PRINCIPAL */
+.layout-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* ZONA DEL CONTENIDO (Izquierda - Ocupa el resto del espacio) */
+.main-feed {
+    flex-grow: 1;
+    /* Esto es temporal para que veas que existe el espacio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* BARRA LATERAL (Derecha) */
+.sidebar-right {
+    width: 80px; /* Ancho estilo barra de iconos */
+    height: 100vh;
+    border-left: 2px solid var(--separator); /* La línea separadora */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    background-color: rgba(253, 251, 255, 0.8); /* Ligero glass effect */
+    backdrop-filter: blur(10px); /* Desenfoque moderno */
+}
+
+/* ESTILOS DE LOS LINKS E ICONOS */
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espacio entre iconos */
+    margin-top: 40px; /* Separación del techo */
+}
+
+.nav-links li a,
+.nav-footer a,
+.nav-logo i {
+    color: var(--icon-color);
+    font-size: 24px; /* Tamaño "Chunky" para que se vea bien en Righteous style */
+    text-decoration: none;
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: block;
+}
+
+/* EFECTOS HOVER (Cuando pasas el mouse) */
+.nav-links li a:hover,
+.nav-footer a:hover {
+    color: var(--text-accent); /* Cambia al azul más fuerte */
+    transform: scale(1.1); /* Pequeño pop al pasar el mouse */
+}
+
+/* BOTÓN 'MÁS' (Pegado al fondo) */
+.nav-footer {
+    margin-top: auto; /* Empuja el botón al final de la barra */
+    margin-bottom: 20px;
+}
