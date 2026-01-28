@@ -322,29 +322,36 @@ body {
     pointer-events: none; /* Para que no interfiera con clicks */
 }
 
-/* --- MODAL BASE --- */
+/* --- OVERLAY --- */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
-    display: none; /* Se activará con JS */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
 
+/* --- 1. BASE DEL MODAL (rounded-edge) --- */
 .modal-base-container {
-    width: 500px;
-    padding: 30px;
-    background: radial-gradient(circle, #99D6E2 0%, #90B5EB 100%);
-    border-radius: 40px;
-    border: 4px solid #243E65; /* Borde exterior */
-    box-shadow: inset 0 0 0 2px #D2F3FF; /* Borde interior */
+    width: 550px;
+    height: auto;
+    min-height: 500px;
+    padding: 60px 40px; /* Padding ajustado para la elipse */
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
+    
+    /* TU FORMA GEOMÉTRICA EXACTA */
+    clip-path: ellipse(85% 50%);
+    background: radial-gradient(circle, #99D6E2 0%, #90B5EB 100%);
+    
+    /* Bordes aplicados sobre la forma */
+    box-shadow: inset 0 0 0 4px #D2F3FF;
+    border: 4px solid #243E65; 
 }
 
 /* --- TEXTOS SUPERIORES --- */
@@ -353,7 +360,6 @@ body {
     color: #FDFBFF;
     font-size: 26px;
     text-align: center;
-    /* Delineado vectorial según tus specs */
     -webkit-text-stroke: 1.5px #4D80B8;
     text-shadow: 0px 4px 0px #243E65;
     margin-bottom: 5px;
@@ -367,28 +373,39 @@ body {
     margin-bottom: 20px;
 }
 
-/* --- CONTENEDOR BLANCO (Folded Rectangle) --- */
+/* --- 2. CONTENEDOR BLANCO (folded-rectangle) --- */
 .modal-content-white {
+    --r: 40px; 
+    width: 90%;
     background-color: #FDFBFF;
-    width: 100%;
-    padding: 25px;
-    border-radius: 30px 30px 0 0; /* Estilo Folded */
-    border: 2px solid #5D8BB0; /* Borde externo */
-    box-shadow: inset 0 0 0 4px #B8E5F7; /* Borde interno sólido */
+    padding: 30px;
+    position: relative;
     text-align: center;
+    
+    /* TU LÓGICA DE MASK EXACTA */
+    border-radius: var(--r) var(--r) 0 0;
+    --_m: 100%, #0000 100%, #000 calc(100% + 1px);
+    -webkit-mask:
+      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
+      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
+      linear-gradient(0, #0000 var(--r), #000 0);
+    -webkit-mask-size: var(--r);
+    mask:
+      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
+      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
+      linear-gradient(0, #0000 var(--r), #000 0);
+    mask-size: var(--r);
+
+    border: 2px solid #5D8BB0;
+    box-shadow: inset 0 0 0 4px #B8E5F7;
 }
 
-.instruction-text {
-    color: #6c8aa7;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-/* --- BOTONES DE OPCIÓN (Estilo Barra de XP) --- */
+/* --- BOTONES DE OPCIÓN --- */
 .auth-buttons-group {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 15px;
 }
 
 .btn-auth-option {
@@ -396,8 +413,8 @@ body {
     padding: 12px;
     border-radius: 15px;
     cursor: pointer;
-    border: 2px solid #5D8BB0; /* Borde externo */
-    box-shadow: inset 0 0 0 4px #B8E5F7; /* Borde interno */
+    border: 2px solid #5D8BB0;
+    box-shadow: inset 0 0 0 4px #B8E5F7;
     background: linear-gradient(to bottom, #fbfaff 0%, #cbf0ff 50%, #daffff 51%, #cbf0ff 100%);
     color: #374D86;
     display: flex;
@@ -405,39 +422,36 @@ body {
     justify-content: center;
     gap: 10px;
     font-size: 16px;
-    transition: transform 0.1s;
 }
 
-.btn-auth-option i {
-    color: var(--icon-color);
-}
-
-.btn-auth-option:hover { transform: scale(1.02); }
-
-.donation-section {
-    margin-top: 20px;
-    border-top: 1px solid #B1D4F0;
-    padding-top: 15px;
-    font-size: 13px;
-    color: #6c8aa7;
-}
-
-/* --- PESTAÑA INFERIOR (Rounded Tab) --- */
+/* --- 3. PESTAÑA INFERIOR (rounded-tab) --- */
 .modal-footer-tab {
-    background-color: #FDFBFF;
-    width: 80%;
-    padding: 15px;
-    border-radius: 0 0 30px 30px; /* Redondeado hacia abajo */
+    --r: 25px; 
+    margin-top: -10px; 
+    padding: 10px 40px;
+    width: fit-content;
+    
+    /* TU LÓGICA DE MASK EXACTA */
+    line-height: 1.8;
+    border-inline: var(--r) solid #0000;
+    border-radius: calc(2*var(--r)) calc(2*var(--r)) 0 0 / var(--r);
+    -webkit-mask: 
+      radial-gradient(var(--r) at var(--r) 0, #0000 98%, #000 101%) calc(-1*var(--r)) 100% / 100% var(--r) repeat-x,
+      conic-gradient(#000 0 0) padding-box;
+    mask: 
+      radial-gradient(var(--r) at var(--r) 0, #0000 98%, #000 101%) calc(-1*var(--r)) 100% / 100% var(--r) repeat-x,
+      conic-gradient(#000 0 0) padding-box;
+    
+    background: #FDFBFF border-box;
     border: 2px solid #5D8BB0;
-    border-top: none; /* Para que encaje con el de arriba */
-    display: flex;
-    justify-content: center;
-    margin-top: -2px; /* Elimina la fisura visual */
+    box-shadow: inset 0 0 0 4px #B8E5F7;
+    
+    transform: rotate(180deg); /* Invertida hacia abajo */
 }
 
-/* --- BOTÓN AZUL RECTANGULAR --- */
+/* --- BOTÓN AZUL DENTRO DEL TAB --- */
 .btn-blue-rect {
-    width: 100%;
+    transform: rotate(180deg); /* Voltear texto de vuelta */
     padding: 10px 20px;
     border-radius: 12px;
     border: 2px solid #374D86;
@@ -445,5 +459,7 @@ body {
     box-shadow: inset 0 0 0 2px #5574B5, inset 0 2px 5px rgba(255, 255, 255, 0.5);
     color: #FDFBFF;
     font-size: 16px;
+    font-family: var(--font-main);
     -webkit-text-stroke: 1px #374D86;
+    cursor: pointer;
 }
