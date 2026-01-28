@@ -365,7 +365,7 @@ body {
 .modal-header-text h1 {
     font-family: var(--font-main);
     color: #FDFBFF;
-    font-size: 40px; /* Texto grande */
+    font-size: 32px;
     font-weight: 900; 
     text-align: center;
     margin-bottom: 5px;
@@ -374,9 +374,19 @@ body {
     /* TÉCNICA DE TRAZO GRUESO + SOMBRA DURA */
     -webkit-text-stroke: 7px #4D80B8; /* Borde vectorial grueso */
     paint-order: stroke fill; /* El borde va DETRÁS del relleno blanco */
-    
-    /* Sombra sólida desplazada hacia abajo (efecto bloque 3D) */
-    text-shadow: 0px 6px 0px #243E65; 
+}
+
+.modal-header-text h1::before {
+    content: attr(data-text); 
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -1;
+
+    -webkit-text-stroke: 16px #243E65;
+    color: #4D80B8;
+    paint-order: stroke fill;
 }
 
 .modal-header-text p {
@@ -385,7 +395,6 @@ body {
     text-align: center;
     font-size: 17px;
     margin-bottom: 25px;
-    font-weight: 600;
 }
 
 /* --- 2. CONTENEDOR BLANCO (Simplificado + Triángulo) --- */
@@ -436,6 +445,7 @@ body {
     margin-top: 15px;
 }
 
+/* --- BOTONES DE OPCIÓN (Texto limpio, sin bold pesado) --- */
 .btn-auth-option {
     font-family: var(--font-main);
     padding: 12px;
@@ -450,8 +460,6 @@ body {
     justify-content: center;
     gap: 10px;
     font-size: 16px;
-    font-weight: 700;
-    transition: transform 0.1s;
 }
 
 .btn-auth-option:active {
@@ -459,43 +467,37 @@ body {
 }
 
 /* --- 3. SECCIÓN DEL BOTÓN FINAL (Ya no es un tab complejo) --- */
+
 .modal-footer-tab {
-    /* Eliminamos la forma rara. Ahora es solo un contenedor para centrar el botón */
     position: relative;
-    z-index: 20; /* Por encima del pico blanco */
-    margin-top: -50px; /* Subimos el botón para que tape la punta del triángulo si quieres, o -10px para que quede debajo */
+    z-index: 20;
+    margin-top: -10px; /* Ajustado para que el botón flote bien bajo el pico */
 }
 
-/* --- BOTÓN AZUL (Estilo igualado al Título) --- */
-.btn-blue-rect {
-    padding: 12px 35px;
-    border-radius: 15px;
+.btn-blue-rect { 
+    padding: 10px 25px; /* Un poco más de aire a los lados */
+    border-radius: 12px; 
+    border: 2px solid #374D86; 
+    background: linear-gradient(to bottom, #addff4 0%, #7facd6 50%, #739ccc 51%, #587ec4 100%); 
+    box-shadow: inset 0 0 0 2px #5574B5, inset 0 2px 5px rgba(255, 255, 255, 0.5); 
+    
+    /* ESTILO DE TEXTO PARA LEGIBILIDAD ALTA */
+    color: #FDFBFF; 
+    font-size: 19px; /* Ligeramente más grande */
+    font-weight: 900; 
+    font-family: var(--font-main); 
+    
+    /* TRAZO MÁS GRUESO Y POSICIONADO ATRÁS */
+    -webkit-text-stroke: 4px #374D86; 
+    paint-order: stroke fill; /* Clave para que el blanco se mantenga íntegro */
+    
     cursor: pointer;
-    
-    /* Fondo Azul Brillante */
-    background: linear-gradient(to bottom, #72C6EF 0%, #0093D9 50%, #0081BF 51%, #0070A6 100%);
-    border: 3px solid #FDFBFF; /* Borde blanco para resaltar sobre el fondo oscuro */
-    outline: 3px solid #243E65; /* Segundo borde oscuro externo */
-    
-    /* Sombra para dar volumen */
-    box-shadow: 0 6px 0 #1B3152; 
-    
-    /* TIPOGRAFÍA IGUAL AL TÍTULO */
-    color: #FDFBFF;
-    font-size: 20px;
-    font-weight: 900;
-    font-family: var(--font-main);
-    
-    -webkit-text-stroke: 5px #243E65; /* Trazo oscuro grueso */
-    paint-order: stroke fill;
-    text-shadow: none; /* Quitamos shadow extra porque usamos stroke fuerte */
-    
-    transition: transform 0.1s, box-shadow 0.1s;
+    transition: transform 0.1s;
 }
 
+/* Efecto de presión para que se sienta real al hacer clic */
 .btn-blue-rect:active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 #1B3152;
+    transform: scale(0.95);
 }
 
 /* --- SECCIÓN DONACIÓN --- */
