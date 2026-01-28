@@ -334,15 +334,15 @@ body {
     z-index: 9999;
 }
 
-/* --- 1. BASE DEL MODAL (Mejorada y compacta) --- */
+/* --- 1. BASE DEL MODAL (Ajustada para ser más horizontal) --- */
 .modal-base-container {
-    /* TAMAÑO Y RESPONSIVIDAD */
-    width: 90%; /* En móviles ocupa el 90% */
-    max-width: 480px; /* Reducimos de 550px a 480px para que se vea más 'cute' y compacto */
-    height: auto; /* Quitamos el min-height para que se ajuste al contenido real */
+    /* TAMAÑO */
+    width: 95%; 
+    max-width: 600px; /* Aumentado de 480px a 600px para que sea rectangular horizontal */
+    height: auto; 
     
-    /* ESPACIADO */
-    padding: 40px 30px; /* Reducimos el padding exagerado (era 60px) */
+    /* ESPACIADO: Menos padding arriba/abajo ayuda a que se vea más apaisado */
+    padding: 40px 30px 50px 30px; 
     
     /* FLEXBOX */
     display: flex;
@@ -352,79 +352,80 @@ body {
     
     /* ESTÉTICA Y COLOR */
     background: radial-gradient(circle at top, #99D6E2 0%, #90B5EB 100%);
-    border-radius: 50px; /* Radio ligeramente ajustado para el nuevo tamaño */
+    border-radius: 50px; 
     border: 4px solid #243E65; 
     
     /* EFECTOS DE PROFUNDIDAD */
-    /* 1. Sombra negra externa (Drop shadow) para que flote */
-    /* 2. Sombra interna (Inset) para el brillo */
     box-shadow: 
-        0 20px 50px rgba(36, 62, 101, 0.5), /* Sombra externa difuminada */
-        inset 0 0 0 4px #D2F3FF; /* Tu brillo interno original */
+        0 20px 50px rgba(36, 62, 101, 0.5),
+        inset 0 0 0 4px #D2F3FF;
 }
 
-/* --- TEXTOS SUPERIORES --- */
+/* --- TEXTOS SUPERIORES (Estilo Sims grueso) --- */
 .modal-header-text h1 {
     font-family: var(--font-main);
     color: #FDFBFF;
-    font-size: 36px; /* Aumentado para mayor impacto */
+    font-size: 40px; /* Texto grande */
     font-weight: 900; 
     text-align: center;
     margin-bottom: 5px;
+    line-height: 1.1;
     
-    /* LÓGICA DE TRAZO VECTORIAL CORRECTA */
-    -webkit-text-stroke: 6px #4D80B8; /* Trazo grueso */
-    paint-order: stroke fill; /* Dibuja el trazo PRIMERO (atrás) y luego el relleno */
+    /* TÉCNICA DE TRAZO GRUESO + SOMBRA DURA */
+    -webkit-text-stroke: 7px #4D80B8; /* Borde vectorial grueso */
+    paint-order: stroke fill; /* El borde va DETRÁS del relleno blanco */
     
-    /* Sombra dura para profundidad extra (estilo Sims) */
-    text-shadow: 0px 4px 0px #243E65; 
+    /* Sombra sólida desplazada hacia abajo (efecto bloque 3D) */
+    text-shadow: 0px 6px 0px #243E65; 
 }
 
 .modal-header-text p {
     font-family: var(--font-main);
     color: #4B659F;
     text-align: center;
-    font-size: 16px;
-    margin-bottom: 20px;
+    font-size: 17px;
+    margin-bottom: 25px;
+    font-weight: 600;
 }
 
-/* --- 2. CONTENEDOR BLANCO (folded-rectangle) --- */
+/* --- 2. CONTENEDOR BLANCO (Simplificado + Triángulo) --- */
 .modal-content-white {
-    --r: 40px; /* Radio de la curva */
-    width: 90%;
+    width: 100%;
     background-color: #FDFBFF;
     padding: 30px;
     position: relative;
     text-align: center;
-    z-index: 1;
+    z-index: 10; /* Asegura que esté por encima */
 
-    /* TU LÓGICA DE MASK (Matemática pura, sin clip-path) */
-    border-radius: var(--r) var(--r) 0 0;
-    --_m: 100%, #0000 100%, #000 calc(100% + 1px);
+    /* FORMA BASE: Rectángulo redondeado estándar */
+    border-radius: 30px;
+    border: 3px solid #5D8BB0;
     
-    -webkit-mask:
-      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
-      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
-      linear-gradient(0, #0000 var(--r), #000 0);
-    -webkit-mask-size: var(--r);
-    
-    mask:
-      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
-      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
-      linear-gradient(0, #0000 var(--r), #000 0);
-    mask-size: var(--r);
-
-    /* SOLUCIÓN PARA EL BORDE: 
-       Como la máscara recorta el 'border' normal, usamos drop-shadow sólido 
-       en 4 direcciones para simular el borde siguiendo la forma exacta de la máscara. */
-    filter: 
-        drop-shadow(0 -2px 0 #5D8BB0) 
-        drop-shadow(0 2px 0 #5D8BB0) 
-        drop-shadow(-2px 0 0 #5D8BB0) 
-        drop-shadow(2px 0 0 #5D8BB0);
-
-    /* Sombra interna simulada con inset (esto sí funciona dentro de la máscara) */
+    /* SOMBRA INTERNA (El borde celeste) */
     box-shadow: inset 0 0 0 4px #B8E5F7;
+    
+    /* Margen inferior para dar espacio al botón que cuelga */
+    margin-bottom: 30px; 
+}
+
+/* EL TRIÁNGULO (Pico del bocadillo) */
+.modal-content-white::after {
+    content: "";
+    position: absolute;
+    bottom: -16px; /* Posición para que salga por debajo */
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg); /* Rotamos un cuadrado para hacer el pico */
+    
+    width: 32px;
+    height: 32px;
+    background-color: #FDFBFF; /* Mismo color de fondo */
+    
+    /* Bordes: Solo pintamos abajo y derecha para simular el pico */
+    border-bottom: 3px solid #5D8BB0;
+    border-right: 3px solid #5D8BB0;
+    
+    /* Truco para que la sombra interna celeste continúe en el pico */
+    box-shadow: inset -4px -4px 0 0 #B8E5F7;
 }
 
 /* --- BOTONES DE OPCIÓN --- */
@@ -441,7 +442,7 @@ body {
     border-radius: 15px;
     cursor: pointer;
     border: 2px solid #5D8BB0;
-    box-shadow: inset 0 0 0 4px #B8E5F7;
+    box-shadow: inset 0 0 0 3px #B8E5F7;
     background: linear-gradient(to bottom, #fbfaff 0%, #cbf0ff 50%, #daffff 51%, #cbf0ff 100%);
     color: #374D86;
     display: flex;
@@ -449,61 +450,65 @@ body {
     justify-content: center;
     gap: 10px;
     font-size: 16px;
+    font-weight: 700;
+    transition: transform 0.1s;
 }
 
-/* --- 3. PESTAÑA INFERIOR (rounded-tab) --- */
+.btn-auth-option:active {
+    transform: scale(0.98);
+}
+
+/* --- 3. SECCIÓN DEL BOTÓN FINAL (Ya no es un tab complejo) --- */
 .modal-footer-tab {
-    --r: 25px; 
-    margin-top: -10px; 
-    padding: 10px 40px;
-    width: fit-content;
-    
-    /* TU LÓGICA DE MASK EXACTA */
-    line-height: 1.8;
-    border-inline: var(--r) solid #0000;
-    border-radius: calc(2*var(--r)) calc(2*var(--r)) 0 0 / var(--r);
-    -webkit-mask: 
-      radial-gradient(var(--r) at var(--r) 0, #0000 98%, #000 101%) calc(-1*var(--r)) 100% / 100% var(--r) repeat-x,
-      conic-gradient(#000 0 0) padding-box;
-    mask: 
-      radial-gradient(var(--r) at var(--r) 0, #0000 98%, #000 101%) calc(-1*var(--r)) 100% / 100% var(--r) repeat-x,
-      conic-gradient(#000 0 0) padding-box;
-    
-    background: #FDFBFF border-box;
-    border: 2px solid #5D8BB0;
-    box-shadow: inset 0 0 0 4px #B8E5F7;
-    
-    transform: rotate(180deg); /* Invertida hacia abajo */
+    /* Eliminamos la forma rara. Ahora es solo un contenedor para centrar el botón */
+    position: relative;
+    z-index: 20; /* Por encima del pico blanco */
+    margin-top: -50px; /* Subimos el botón para que tape la punta del triángulo si quieres, o -10px para que quede debajo */
 }
 
-/* --- BOTÓN AZUL DENTRO DEL TAB --- */
+/* --- BOTÓN AZUL (Estilo igualado al Título) --- */
 .btn-blue-rect {
-    transform: rotate(180deg); 
-    padding: 10px 20px;
-    border-radius: 12px;
-    border: 2px solid #374D86;
-    background: linear-gradient(to bottom, #addff4 0%, #7facd6 50%, #739ccc 51%, #587ec4 100%);
-    box-shadow: inset 0 0 0 2px #5574B5, inset 0 2px 5px rgba(255, 255, 255, 0.5);
-    color: #FDFBFF;
-    font-size: 18px;
-    font-weight: 900; /* Texto mucho más grueso */
-    font-family: var(--font-main);
-    -webkit-text-stroke: 1.2px #374D86;
+    padding: 12px 35px;
+    border-radius: 15px;
     cursor: pointer;
+    
+    /* Fondo Azul Brillante */
+    background: linear-gradient(to bottom, #72C6EF 0%, #0093D9 50%, #0081BF 51%, #0070A6 100%);
+    border: 3px solid #FDFBFF; /* Borde blanco para resaltar sobre el fondo oscuro */
+    outline: 3px solid #243E65; /* Segundo borde oscuro externo */
+    
+    /* Sombra para dar volumen */
+    box-shadow: 0 6px 0 #1B3152; 
+    
+    /* TIPOGRAFÍA IGUAL AL TÍTULO */
+    color: #FDFBFF;
+    font-size: 20px;
+    font-weight: 900;
+    font-family: var(--font-main);
+    
+    -webkit-text-stroke: 5px #243E65; /* Trazo oscuro grueso */
+    paint-order: stroke fill;
+    text-shadow: none; /* Quitamos shadow extra porque usamos stroke fuerte */
+    
+    transition: transform 0.1s, box-shadow 0.1s;
 }
 
-/* --- SECCIÓN DONACIÓN (Añadir esto para centrar el botón) --- */
+.btn-blue-rect:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #1B3152;
+}
+
+/* --- SECCIÓN DONACIÓN --- */
 .donation-section {
     margin-top: 20px;
     border-top: 1px solid #B1D4F0;
     padding-top: 15px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Esto es lo que centra el botón horizontalmente */
+    align-items: center;
     gap: 10px;
 }
 
-/* Opcional: Para que el botón de donación no sea 100% ancho y se vea mejor */
 .btn-donation {
     width: fit-content;
     padding-inline: 30px;
