@@ -371,7 +371,12 @@ body {
     margin-bottom: 5px;
     line-height: 1.1;
     
-    /* TÉCNICA DE TRAZO GRUESO + SOMBRA DURA */
+    position: relative; 
+    display: block; 
+    width: 100%;
+    z-index: 1;
+
+    
     -webkit-text-stroke: 7px #4D80B8; /* Borde vectorial grueso */
     paint-order: stroke fill; /* El borde va DETRÁS del relleno blanco */
 }
@@ -379,14 +384,26 @@ body {
 .modal-header-text h1::before {
     content: attr(data-text); 
     position: absolute;
-    left: 0;
-    right: 0;
+    
+    /* 2. FORZAMOS EL CENTRADO TOTAL */
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* 3. Aseguramos que el texto clonado esté centrado igual que el original */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
     z-index: -1;
 
     -webkit-text-stroke: 16px #243E65;
     color: #4D80B8;
     paint-order: stroke fill;
+
+    pointer-events: none;
 }
 
 .modal-header-text p {
