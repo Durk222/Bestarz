@@ -334,132 +334,96 @@ body {
     z-index: 9999;
 }
 
-/* --- 1. BASE DEL MODAL (rounded-edge) --- */
+/* --- 1. BASE DEL MODAL (Rectángulo Redondeado Estable) --- */
 .modal-base-container {
     width: 550px;
     height: auto;
     min-height: 500px;
-    padding: 60px 40px; /* Padding ajustado para la elipse */
+    padding: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     
-    /* TU FORMA GEOMÉTRICA EXACTA */
-    clip-path: ellipse(85% 50%);
+    /* Cambiado de clip-path a border-radius para evitar recortes en el borde */
     background: radial-gradient(circle, #99D6E2 0%, #90B5EB 100%);
-    
-    /* Bordes aplicados sobre la forma */
-    box-shadow: inset 0 0 0 4px #D2F3FF;
-    border: 4px solid #243E65; 
+    border-radius: 60px; /* Curvatura amplia pero limpia */
+    border: 4px solid #243E65;
+    box-shadow: inset 0 0 0 4px #D2F3FF, 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* --- TEXTOS SUPERIORES --- */
+/* --- TEXTOS SUPERIORES (Más Bold) --- */
 .modal-header-text h1 {
     font-family: var(--font-main);
     color: #FDFBFF;
-    font-size: 26px;
+    font-size: 32px; /* Aumentado ligeramente */
+    font-weight: 900; /* Forzado a máxima anchura */
     text-align: center;
-    -webkit-text-stroke: 1.5px #4D80B8;
-    text-shadow: 0px 4px 0px #243E65;
+    /* Stroke más fino y sombra más densa para dar grosor al blanco */
+    -webkit-text-stroke: 1.2px #4D80B8;
+    text-shadow: 
+        -2px -2px 0 #243E65,  
+         2px -2px 0 #243E65,
+        -2px  2px 0 #243E65,
+         2px  2px 0 #243E65,
+         0px  4px 0 #243E65;
     margin-bottom: 5px;
 }
 
-.modal-header-text p {
-    font-family: var(--font-main);
-    color: #4B659F;
-    text-align: center;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-/* --- 2. CONTENEDOR BLANCO (folded-rectangle) --- */
+/* --- 2. CONTENEDOR BLANCO (Folded con alineación corregida) --- */
 .modal-content-white {
     --r: 40px; 
     width: 90%;
     background-color: #FDFBFF;
     padding: 30px;
     position: relative;
-    text-align: center;
-    
-    /* TU LÓGICA DE MASK EXACTA */
-    border-radius: var(--r) var(--r) 0 0;
-    --_m: 100%, #0000 100%, #000 calc(100% + 1px);
-    -webkit-mask:
-      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
-      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
-      linear-gradient(0, #0000 var(--r), #000 0);
-    -webkit-mask-size: var(--r);
-    mask:
-      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
-      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
-      linear-gradient(0, #0000 var(--r), #000 0);
-    mask-size: var(--r);
-
-    border: 2px solid #5D8BB0;
-    box-shadow: inset 0 0 0 4px #B8E5F7;
-}
-
-/* --- BOTONES DE OPCIÓN --- */
-.auth-buttons-group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 15px;
-}
+    align-items: center; /* Asegura que todo el contenido interno esté centrado */
+    
+    border-radius: var(--r) var(--r) 0 0;
+    -webkit-mask:
+      radial-gradient(var(--r) at 100% 100%, #0000 98%, #000 101%) 0 100% no-repeat,
+      radial-gradient(var(--r) at 0 100%, #0000 98%, #000 101%) 100% 100% no-repeat,
+      linear-gradient(0, #000 0 0) padding-box; /* Simplificado para estabilidad */
+    mask:
+      radial-gradient(var(--r) at 100% 100%, #0000 98%, #000 101%) 0 100% no-repeat,
+      radial-gradient(var(--r) at 0 100%, #0000 98%, #000 101%) 100% 100% no-repeat,
+      linear-gradient(0, #000 0 0) padding-box;
 
-.btn-auth-option {
-    font-family: var(--font-main);
-    padding: 12px;
-    border-radius: 15px;
-    cursor: pointer;
     border: 2px solid #5D8BB0;
     box-shadow: inset 0 0 0 4px #B8E5F7;
-    background: linear-gradient(to bottom, #fbfaff 0%, #cbf0ff 50%, #daffff 51%, #cbf0ff 100%);
-    color: #374D86;
+}
+
+/* --- BOTÓN DE DONACIÓN CENTRADO --- */
+.donation-section {
+    width: 100%;
+    margin-top: 20px;
+    border-top: 2px solid #B1D4F0;
+    padding-top: 15px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center; /* Centra el botón de donación */
     gap: 10px;
-    font-size: 16px;
 }
 
-/* --- 3. PESTAÑA INFERIOR (rounded-tab) --- */
-.modal-footer-tab {
-    --r: 25px; 
-    margin-top: -10px; 
-    padding: 10px 40px;
-    width: fit-content;
-    
-    /* TU LÓGICA DE MASK EXACTA */
-    line-height: 1.8;
-    border-inline: var(--r) solid #0000;
-    border-radius: calc(2*var(--r)) calc(2*var(--r)) 0 0 / var(--r);
-    -webkit-mask: 
-      radial-gradient(var(--r) at var(--r) 0, #0000 98%, #000 101%) calc(-1*var(--r)) 100% / 100% var(--r) repeat-x,
-      conic-gradient(#000 0 0) padding-box;
-    mask: 
-      radial-gradient(var(--r) at var(--r) 0, #0000 98%, #000 101%) calc(-1*var(--r)) 100% / 100% var(--r) repeat-x,
-      conic-gradient(#000 0 0) padding-box;
-    
-    background: #FDFBFF border-box;
-    border: 2px solid #5D8BB0;
-    box-shadow: inset 0 0 0 4px #B8E5F7;
-    
-    transform: rotate(180deg); /* Invertida hacia abajo */
+.btn-donation {
+    width: 80%; /* Ajuste de ancho para que no sea gigante */
 }
 
-/* --- BOTÓN AZUL DENTRO DEL TAB --- */
+/* --- BOTÓN AZUL (Más legible y Bold) --- */
 .btn-blue-rect {
-    transform: rotate(180deg); /* Voltear texto de vuelta */
-    padding: 10px 20px;
-    border-radius: 12px;
+    transform: rotate(180deg); 
+    padding: 12px 30px;
+    border-radius: 15px;
     border: 2px solid #374D86;
     background: linear-gradient(to bottom, #addff4 0%, #7facd6 50%, #739ccc 51%, #587ec4 100%);
     box-shadow: inset 0 0 0 2px #5574B5, inset 0 2px 5px rgba(255, 255, 255, 0.5);
     color: #FDFBFF;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
     font-family: var(--font-main);
     -webkit-text-stroke: 1px #374D86;
+    text-shadow: 0px 2px 0px rgba(0,0,0,0.2);
     cursor: pointer;
 }
