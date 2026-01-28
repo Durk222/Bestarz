@@ -267,7 +267,7 @@ body {
     left: -5px;
     z-index: 3;
     background-color: var(--bg-color); /* El color de fondo para el recorte */
-    padding: 8px; /* El borde de 8px que pediste para el efecto de corte */
+    padding: 4px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -307,20 +307,17 @@ body {
 /* EL NÚMERO DE NIVEL */
 .level-number {
     position: absolute;
-    right: -10px; /* Ajustamos un poco la posición */
+    right: 15px; /* Lo metemos dentro de la barra */
     z-index: 4;
     font-family: var(--font-main);
-    font-size: 32px; /* Un poco más grande para impacto */
+    font-size: 24px; /* Ajustado para que quepa dentro de los 24px de alto de la barra */
     color: #EBF8FF; 
     
-    /* Borde exterior más limpio: Usamos menos sombras pero más precisas */
-    text-shadow: 
-        2px 2px 0 #374D86,
-       -2px -2px 0 #374D86,
-        2px -2px 0 #374D86,
-       -2px 2px 0 #374D86,
-        0px 4px 0 #374D86; /* Sombra base para dar peso */
+    /* MÉTODO LIMPIO: Borde real de 4px */
+    -webkit-text-stroke: 1.5px #374D86; /* El contorno azul oscuro */
     
-    /* Pequeño ajuste para que no se pegue tanto a la barra */
-    letter-spacing: 1px;
+    /* Opcional: una sola sombra suave hacia abajo para dar profundidad, no para el borde */
+    text-shadow: 0px 2px 0px rgba(0,0,0,0.3);
+    
+    pointer-events: none; /* Para que no interfiera con clicks */
 }
