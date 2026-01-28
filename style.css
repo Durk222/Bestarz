@@ -334,34 +334,50 @@ body {
     z-index: 9999;
 }
 
-/* --- 1. BASE DEL MODAL --- */
+/* --- 1. BASE DEL MODAL (Mejorada y compacta) --- */
 .modal-base-container {
-    width: 550px;
-    height: auto;
-    min-height: 500px;
-    padding: 60px 40px;
+    /* TAMAÑO Y RESPONSIVIDAD */
+    width: 90%; /* En móviles ocupa el 90% */
+    max-width: 480px; /* Reducimos de 550px a 480px para que se vea más 'cute' y compacto */
+    height: auto; /* Quitamos el min-height para que se ajuste al contenido real */
+    
+    /* ESPACIADO */
+    padding: 40px 30px; /* Reducimos el padding exagerado (era 60px) */
+    
+    /* FLEXBOX */
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     
-    /* Reemplazado clip-path por border-radius */
-    background: radial-gradient(circle, #99D6E2 0%, #90B5EB 100%);
-    border-radius: 60px; 
+    /* ESTÉTICA Y COLOR */
+    background: radial-gradient(circle at top, #99D6E2 0%, #90B5EB 100%);
+    border-radius: 50px; /* Radio ligeramente ajustado para el nuevo tamaño */
     border: 4px solid #243E65; 
-    box-shadow: inset 0 0 0 4px #D2F3FF;
+    
+    /* EFECTOS DE PROFUNDIDAD */
+    /* 1. Sombra negra externa (Drop shadow) para que flote */
+    /* 2. Sombra interna (Inset) para el brillo */
+    box-shadow: 
+        0 20px 50px rgba(36, 62, 101, 0.5), /* Sombra externa difuminada */
+        inset 0 0 0 4px #D2F3FF; /* Tu brillo interno original */
 }
 
 /* --- TEXTOS SUPERIORES --- */
 .modal-header-text h1 {
     font-family: var(--font-main);
     color: #FDFBFF;
-    font-size: 32px; /* Un poco más grande para que el bold se note */
-    font-weight: 900; /* Grosor máximo */
+    font-size: 36px; /* Aumentado para mayor impacto */
+    font-weight: 900; 
     text-align: center;
-    -webkit-text-stroke: 1.5px #4D80B8;
-    text-shadow: 0px 4px 0px #243E65;
     margin-bottom: 5px;
+    
+    /* LÓGICA DE TRAZO VECTORIAL CORRECTA */
+    -webkit-text-stroke: 6px #4D80B8; /* Trazo grueso */
+    paint-order: stroke fill; /* Dibuja el trazo PRIMERO (atrás) y luego el relleno */
+    
+    /* Sombra dura para profundidad extra (estilo Sims) */
+    text-shadow: 0px 4px 0px #243E65; 
 }
 
 .modal-header-text p {
@@ -372,68 +388,43 @@ body {
     margin-bottom: 20px;
 }
 
-/* --- 2. CONTENEDOR BLANCO (folded-rectangle con bordes que no se cortan) --- */
+/* --- 2. CONTENEDOR BLANCO (folded-rectangle) --- */
 .modal-content-white {
-  --r: 40px; 
-  width: 90%;
-  background-color: #FDFBFF;
-  padding: 30px;
-  position: relative;
-  text-align: center;
-  z-index: 1;
+    --r: 40px; /* Radio de la curva */
+    width: 90%;
+    background-color: #FDFBFF;
+    padding: 30px;
+    position: relative;
+    text-align: center;
+    z-index: 1;
 
-  /* Aplicamos la máscara al fondo blanco */
-  -webkit-mask:
-    radial-gradient(var(--r) at 100% 100%, #0000 98%, #000 101%) 0 100% no-repeat,
-    radial-gradient(var(--r) at 0 100%, #0000 98%, #000 101%) 100% 100% no-repeat,
-    linear-gradient(0, #000 0 0) padding-box;
-  mask:
-    radial-gradient(var(--r) at 100% 100%, #0000 98%, #000 101%) 0 100% no-repeat,
-    radial-gradient(var(--r) at 0 100%, #0000 98%, #000 101%) 100% 100% no-repeat,
-    linear-gradient(0, #000 0 0) padding-box;
-  
-  /* Quitamos el border y box-shadow de aquí porque se los comería la mask */
-  border: none;
-  box-shadow: none;
-}
+    /* TU LÓGICA DE MASK (Matemática pura, sin clip-path) */
+    border-radius: var(--r) var(--r) 0 0;
+    --_m: 100%, #0000 100%, #000 calc(100% + 1px);
+    
+    -webkit-mask:
+      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
+      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
+      linear-gradient(0, #0000 var(--r), #000 0);
+    -webkit-mask-size: var(--r);
+    
+    mask:
+      radial-gradient(var(--r) at 100% var(--_m)) 0 100% no-repeat,
+      radial-gradient(var(--r) at 0 var(--_m)) 100% 100% no-repeat,
+      linear-gradient(0, #0000 var(--r), #000 0);
+    mask-size: var(--r);
 
-/* --- EL TRUCO PARA EL BORDE: Un clon con "mask-composite" --- */
-.modal-content-white::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 2px; /* Este es el grosor de tu borde azul oscuro */
-  background: #5D8BB0; /* Color del borde */
-  
-  /* Usamos mask-composite para que solo se pinte el borde siguiendo la curva */
-  -webkit-mask:
-    radial-gradient(var(--r) at 100% 100%, #0000 98%, #000 101%) 0 100% no-repeat,
-    radial-gradient(var(--r) at 0 100%, #0000 98%, #000 101%) 100% 100% no-repeat,
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  
-  pointer-events: none;
-}
+    /* SOLUCIÓN PARA EL BORDE: 
+       Como la máscara recorta el 'border' normal, usamos drop-shadow sólido 
+       en 4 direcciones para simular el borde siguiendo la forma exacta de la máscara. */
+    filter: 
+        drop-shadow(0 -2px 0 #5D8BB0) 
+        drop-shadow(0 2px 0 #5D8BB0) 
+        drop-shadow(-2px 0 0 #5D8BB0) 
+        drop-shadow(2px 0 0 #5D8BB0);
 
-/* El borde celeste interno (opcional para mantener el estilo original) */
-.modal-content-white::after {
-  content: "";
-  position: absolute;
-  inset: 2px; /* Desplazado para que no tape el borde oscuro */
-  padding: 4px; /* Grosor del borde celeste */
-  background: #B8E5F7;
-  
-  -webkit-mask:
-    radial-gradient(var(--r) at 100% 100%, #0000 98%, #000 101%) 0 100% no-repeat,
-    radial-gradient(var(--r) at 0 100%, #0000 98%, #000 101%) 100% 100% no-repeat,
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  
-  pointer-events: none;
+    /* Sombra interna simulada con inset (esto sí funciona dentro de la máscara) */
+    box-shadow: inset 0 0 0 4px #B8E5F7;
 }
 
 /* --- BOTONES DE OPCIÓN --- */
