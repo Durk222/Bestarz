@@ -285,10 +285,10 @@ body {
 .xp-bar-base {
     width: 100%;
     height: 24px;
-    background-color: var(--icon-color);
-    border: 2.5px solid #CBF0FF; /* Borde de la barra */
+    background-color: #CBF0FF; /* Fondo claro para la barra vacía */
+    border: 2px solid var(--icon-color); /* Borde oscuro con el color del icono */
     border-radius: 12px;
-    margin-left: 15px; /* Para que empiece detrás de la estrella */
+    margin-left: 15px;
     overflow: hidden;
     position: relative;
     z-index: 1;
@@ -296,28 +296,29 @@ body {
 
 /* LA EXPERIENCIA (PROGRESO) */
 .xp-progress {
-    width: 40%; /* Esto lo controlará el backend después */
+    width: 40%; 
     height: 100%;
-    /* Tu gradiente Glossy personalizado */
     background: linear-gradient(to bottom, #fbfaff 0%, #cbf0ff 50%, #daffff 51%, #cbf0ff 100%);
-    border-right: 2px solid #CBF0FF;
+    border-right: 2px solid var(--icon-color); /* Separador de progreso oscuro */
 }
 
 /* EL NÚMERO DE NIVEL */
 .level-number {
     position: absolute;
-    right: 5px;
+    right: -10px; /* Ajustamos un poco la posición */
     z-index: 4;
     font-family: var(--font-main);
-    font-size: 28px;
-    color: #EBF8FF; /* Relleno */
+    font-size: 32px; /* Un poco más grande para impacto */
+    color: #EBF8FF; 
     
-    /* Borde interior y exterior combinado con text-shadow */
-    /* El borde exterior de 4px #374D86 se logra expandiendo la sombra */
+    /* Borde exterior más limpio: Usamos menos sombras pero más precisas */
     text-shadow: 
-        /* Borde interior 1px #CEE2FB */
-        -1px -1px 0 #CEE2FB,  1px -1px 0 #CEE2FB, -1px 1px 0 #CEE2FB, 1px 1px 0 #CEE2FB,
-        /* Borde exterior 4px #374D86 */
-        -4px -4px 0 #374D86,  4px -4px 0 #374D86, -4px 4px 0 #374D86, 4px 4px 0 #374D86,
-         0px 4px 6px rgba(0,0,0,0.4);
+        2px 2px 0 #374D86,
+       -2px -2px 0 #374D86,
+        2px -2px 0 #374D86,
+       -2px 2px 0 #374D86,
+        0px 4px 0 #374D86; /* Sombra base para dar peso */
+    
+    /* Pequeño ajuste para que no se pegue tanto a la barra */
+    letter-spacing: 1px;
 }
