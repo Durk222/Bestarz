@@ -532,3 +532,32 @@ body {
     width: fit-content;
     padding-inline: 30px;
 }
+
+/* Clase para cuando el botón debe ser "Cerrar Sesión" */
+.btn-logout {
+    padding: 5px 20px;
+    font-size: 18px;
+    color: #374D86;
+    border-radius: 8px;
+    border: 2px solid #5D8BB0;
+    /* LA MISMA GRADIENTE BLANCA/CELESTE DE TUS BOTONES DEL MODAL */
+    background: linear-gradient(to bottom, #fbfaff 0%, #cbf0ff 50%, #daffff 51%, #cbf0ff 100%);
+    box-shadow: inset 0 0 0 2px #B8E5F7, 
+                inset 0 2px 5px rgba(255, 255, 255, 0.5);
+    text-shadow: 0px 1px 0px rgba(255,255,255,0.8);
+}
+
+/* Estilo para la foto de perfil en la barra lateral */
+.user-avatar-nav {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%; /* Circular */
+    border: 2px solid #5574B5;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+/* Ocultar el icono de usuario original cuando hay foto */
+.hidden {
+    display: none !important;
+}
