@@ -1,6 +1,6 @@
 // 1. Configuración de Supabase
-const supabaseUrl = 'TU_SUPABASE_URL';
-const supabaseKey = 'TU_SUPABASE_ANON_KEY';
+const supabaseUrl = 'https://gughdghlphaqfqypidmr.supabase.co';
+const supabaseKey = 'sb_publishable_a1AJQFRr3y-DTbIx41Z5sA_w0tuDyEM';
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
 // Esperar a que el DOM esté listo
@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loginBtn.addEventListener('click', () => {
         modal.style.display = 'flex';
         
-        // Animación de entrada con GSAP (Efecto "Pop" estilo Sims)
         gsap.fromTo(".modal-base-container", 
             { scale: 0.5, opacity: 0 }, 
             { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.7)" }
