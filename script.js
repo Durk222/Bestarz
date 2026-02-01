@@ -3,21 +3,58 @@ const supabaseUrl = 'https://gughdghlphaqfqypidmr.supabase.co';
 const supabaseKey = 'sb_publishable_a1AJQFRr3y-DTbIx41Z5sA_w0tuDyEM';
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+const updateUI = (user) => {
+    const loginBtn = document.querySelector('.btn-green-login') || document.querySelector('.btn-logout');
+    const userLink = document.querySelector('.nav-links li:last-child a');
+
+    if (user) {
+        // Cambiar a botón de SALIR (Blanco/Celeste)
+        loginBtn.textContent = 'SALIR';
+        loginBtn.className = 'btn-frutiger btn-logout'; // Cambiamos la clase verde por la blanca
+        
+        // Poner la foto de perfil en el icono de usuario
+        if (user.user_metadata.avatar_url) {
+            userLink.innerHTML = `<img src="${user.user_metadata.avatar_url}" class="user-avatar-nav" alt="Profile">`;
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else {
+        // Resetear a ¡INGRESA! (Verde)
+        if (loginBtn) {
+            loginBtn.textContent = '¡INGRESA!';
+            loginBtn.className = 'btn-frutiger btn-green-login';
+        }
+        userLink.innerHTML = `<i class="fa-solid fa-user"></i>`;
+    }
+};
+
 // Esperar a que el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    const loginBtn = document.querySelector('.btn-green-login');
+    const loginBtn = document.querySelector('.btn-green-login') || document.querySelector('.btn-logout');
     const modal = document.getElementById('auth-modal');
     const googleBtn = document.querySelector('.btn-auth-option:first-child');
 
-    // 1. Función para ABRIR el modal
-    loginBtn.addEventListener('click', () => {
+    const checkSession = async () => {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    updateUI(session?.user);
+    };
+    checkSession();
+
+    loginBtn.addEventListener('click', async () => {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+
+    if (session) {
+        // Lógica para CERRAR SESIÓN
+        await supabaseClient.auth.signOut();
+        window.location.reload(); 
+    } else {
+        // TU LÓGICA ORIGINAL DE ABRIR MODAL (Mantenla aquí adentro)
         modal.style.display = 'flex';
-        
         gsap.fromTo(".modal-base-container", 
             { scale: 0.5, opacity: 0 }, 
             { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.7)" }
         );
-    });
+    }
+});
 
     // 2. Lógica de Google AUTH con Supabase
     googleBtn.addEventListener('click', async () => {
