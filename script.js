@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
             provider: 'google',
             options: {
+                redirectTo: 'https://durk222.github.io/Bestarz/',
                 queryParams: {
                     access_type: 'offline',
                     prompt: 'consent',
