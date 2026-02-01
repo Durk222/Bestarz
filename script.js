@@ -1,9 +1,15 @@
+// 1. Configuración de Supabase
+const supabaseUrl = 'TU_SUPABASE_URL';
+const supabaseKey = 'TU_SUPABASE_ANON_KEY';
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
 // Esperar a que el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.querySelector('.btn-green-login');
     const modal = document.getElementById('auth-modal');
+    const googleBtn = document.querySelector('.btn-auth-option:first-child');
 
-    // Función para abrir el modal
+    // 1. Función para ABRIR el modal
     loginBtn.addEventListener('click', () => {
         modal.style.display = 'flex';
         
@@ -14,7 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 
-    // Cerrar el modal al hacer click en el fondo (overlay)
+    // 2. Lógica de Google AUTH con Supabase
+    googleBtn.addEventListener('click', async () => {
+        // Efecto visual rápido al hacer clic
+        gsap.to(googleBtn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
+
+        console.log("Iniciando sesión con Google en Supabase...");
+        
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                },
+            },
+        });
+
+        if (error) {
+            console.error("Error al autenticar:", error.message);
+        }
+    });
+
+    // 3. Cerrar el modal al hacer click en el fondo (overlay)
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             gsap.to(".modal-base-container", {
