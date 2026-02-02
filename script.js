@@ -3,7 +3,7 @@ const supabaseUrl = 'https://gughdghlphaqfqypidmr.supabase.co';
 const supabaseKey = 'sb_publishable_a1AJQFRr3y-DTbIx41Z5sA_w0tuDyEM';
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-const updateUI = (user) => {
+const updateUI = async (user) => {
     const loginBtn = document.querySelector('.btn-green-login') || document.querySelector('.btn-logout');
     const userLink = document.querySelector('.nav-links li:last-child a');
 
@@ -16,6 +16,26 @@ const updateUI = (user) => {
         if (user.user_metadata.avatar_url) {
             userLink.innerHTML = `<img src="${user.user_metadata.avatar_url}" class="user-avatar-nav" alt="Profile">`;
         }
+        // 1. Intentar obtener el perfil del usuario
+        let { data: profile } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single();
+
+        // 2. Si no existe (primer login), crearlo con 85 XP de regalo
+        if (!profile) {
+            const { data: newProfile } = await supabaseClient
+                .from('profiles')
+                .insert([{ id: user.id, xp: 85, level: 1 }])
+                .select()
+                .single();
+            profile = newProfile;
+        }
+
+        // 3. Pintar la barra con los datos obtenidos
+        updateXPBar(profile.xp, profile.level);
+        
         window.history.replaceState({}, document.title, window.location.pathname);
     } else {
         // Resetear a ¡INGRESA! (Verde)
@@ -24,7 +44,31 @@ const updateUI = (user) => {
             loginBtn.className = 'btn-frutiger btn-green-login';
         }
         userLink.innerHTML = `<i class="fa-solid fa-user"></i>`;
+
+        updateXPBar(0, 1);
     }
+};
+
+// Configuración del sistema de niveles
+const XP_BASE = 100; // Nivel 1 necesita 100 XP
+
+const getXPRequired = (level) => {
+    return Math.floor(XP_BASE * Math.pow(1.2, level - 1));
+};
+
+const updateXPBar = (currentXP, level) => {
+    const nextLevelXP = getXPRequired(level);
+    const percentage = (currentXP / nextLevelXP) * 100;
+    
+    // Animación de la barra
+    gsap.to(".xp-progress", {
+        width: `${percentage}%`,
+        duration: 1.2,
+        ease: "power2.out"
+    });
+    
+    // Actualizar el número de nivel
+    document.querySelector('.level-number').textContent = level;
 };
 
 // Esperar a que el DOM esté listo
